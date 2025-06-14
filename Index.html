@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bus Booking</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>RTC Bus Ticket Booking</h1>
+    <form id="bookingForm">
+      <label for="from">From:</label>
+      <input type="text" id="from" name="from" placeholder="Enter starting city" required />
+
+      <label for="to">To:</label>
+      <input type="text" id="to" name="to" placeholder="Enter destination city" required />
+
+      <label for="date">Date of Journey:</label>
+      <input type="date" id="date" name="date" required />
+
+      <button type="submit">Book Now</button>
+    </form>
+    <div id="result"></div>
+  </div>
+
+  <script src="script.js"></script>
+
+  <!-- Google Places API (replace YOUR_API_KEY) -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places&callback=initAutocomplete" async defer></script>
+</body>
+</html>
