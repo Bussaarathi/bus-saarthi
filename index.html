@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>RTC Bus Booking</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      background-color: #fff;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #2a63d4;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      background-color: #2a63d4;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .result-area {
+      margin-top: 20px;
+    }
+
+    .bus-card {
+      background-color: #eef2ff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .bus-card h3 {
+      margin: 0 0 5px 0;
+      color: #2a63d4;
+    }
+
+    .bus-card p {
+      margin: 3px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>RTC Bus Ticket Booking</h1>
+    <form id="bookingForm">
+      <label for="from">From (Mandal/Town):</label>
+      <input list="mandals" id="from" name="from" required>
+
+      <label for="to">To (Mandal/Town):</label>
+      <input list="mandals" id="to" name="to" required>
+
+      <label for="date">Date of Journey:</label>
+      <input type="date" id="date" name="date" required>
+
+      <button type="submit">Book Now</button>
+    </form>
+
+    <div id="resultArea" class="result-area"></div>
+  </div>
+
+  <!-- Datalist for Mandals -->
+  <datalist id="mandals">
+    <option value="Adilabad" />
+    <option value="Nirmal" />
+    <option value="Nizamabad" />
+    <option value="Karimnagar" />
+    <option value="Warangal" />
+    <option value="Khammam" />
+    <option value="Mahabubnagar" />
+    <option value="Medak" />
+    <option value="Srikakulam" />
+    <option value="Vizianagaram" />
+    <option value="Visakhapatnam" />
+    <option value="Rajahmundry" />
+    <option value="Guntur" />
+    <option value="Nellore" />
+    <option value="Kurnool" />
+    <option value="Tirupati" />
+    <option value="Bengaluru" />
+    <option value="Tumakuru" />
+    <option value="Mysuru" />
+    <option value="Mangaluru" />
+    <option value="Belagavi" />
+    <option value="Hubballi" />
+    <option value="Chennai" />
+    <option value="Coimbatore" />
+    <option value="Madurai" />
+    <option value="Salem" />
+    <option value="Tirunelveli" />
+    <option value="Erode" />
+    <option value="Vellore" />
+    <option value="Mumbai" />
+    <option value="Pune" />
+    <option value="Nashik" />
+    <option value="Nagpur" />
+    <option value="Aurangabad" />
+    <option value="Solapur" />
+    <option value="Latur" />
+    <option value="Thiruvananthapuram" />
+    <option value="Kollam" />
+    <option value="Alappuzha" />
+    <option value="Ernakulam" />
+    <option value="Thrissur" />
+    <option value="Kozhikode" />
+    <option value="Kannur" />
+    <option value="Palakkad" />
+  </datalist>
+
+  <script>
+    const demoData = [
+      {
+        rtc: "TSRTC",
+        service: "Super Luxury",
+        route: "Hyderabad → Warangal",
+        time: "06:00 AM",
+        price: "₹320"
+      },
+      {
+        rtc: "KSRTC",
+        service: "Rajahamsa",
+        route: "Bangalore → Mysore",
+        time: "07:30 AM",
+        price: "₹280"
+      },
+      {
+        rtc: "MSRTC",
+        service: "Shivneri",
+        route: "Pune → Mumbai",
+        time: "09:00 AM",
+        price: "₹450"
+      },
+      {
+        rtc: "TNSTC",
+        service: "Ultra Deluxe",
+        route: "Chennai → Madurai",
+        time: "08:15 AM",
+        price: "₹380"
+      },
+      {
+        rtc: "Kerala RTC",
+        service: "Fast Passenger",
+        route: "Kochi → Trivandrum",
+        time: "10:00 AM",
+        price: "₹300"
+      },
+      {
+        rtc: "APSRTC",
+        service: "Garuda Plus",
+        route: "Vijayawada → Tirupati",
+        time: "05:45 AM",
+        price: "₹500"
+      }
+    ];
+
+    document.getElementById("bookingForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const from = document.getElementById("from").value;
+      const to = document.getElementById("to").value;
+      const date = document.getElementById("date").value;
+
+      let resultHTML = `<h3>Available Buses for ${from} → ${to} on ${date}:</h3>`;
+
+      demoData.forEach(bus => {
+        resultHTML += `
+          <div class="bus-card">
+            <h3>${bus.rtc} - ${bus.service}</h3>
+            <p><strong>Route:</strong> ${bus.route}</p>
+            <p><strong>Time:</strong> ${bus.time}</p>
+            <p><strong>Price:</strong> ${bus.price}</p>
+          </div>
+        `;
+      });
+
+      document.getElementById("resultArea").innerHTML = resultHTML;
+    });
+  </script>
+</body>
+</html>
